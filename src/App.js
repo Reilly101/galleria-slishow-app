@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import Card from "./Card.js";
+import data from "./data.json";
+import CardPreview from "./CardPreview.js";
+import { useState } from "react";
+import './App.css'
 
-function App() {
+
+export default function App() {
+  let [preview,setPreview] = useState(-1)
+
+  function handleArrows(dir){
+    setPreview(preview + dir)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    preview>=0?
+    <CardPreview 
+      data={data[preview]} 
+      click={()=> setPreview(-1)}
+      move={handleArrows}
+    index={preview}
+    />
+    :
+    <div className='main-container'>
+      {data.map((image, index) => (
+        <Card click={()=>setPreview(index)}  image={image}  />
+
+      ))}
     </div>
   );
 }
-
-export default App;
